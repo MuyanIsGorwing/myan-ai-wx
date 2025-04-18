@@ -1,9 +1,9 @@
 {
-  "navigationBarTitleText": "MyanAI",
+  "navigationBarTitleText": "AI助手",
   "navigationBarBackgroundColor": "#FFFFFF",
   "navigationBarTextStyle": "black",
   "navigationStyle": "custom",
   "usingComponents": {
     "navigation-bar": "/components/navigation-bar/navigation-bar"
   }
-}
+} 

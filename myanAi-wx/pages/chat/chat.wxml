@@ -1,0 +1,56 @@
+<view class="chat-container">
+  <view class="nav-bar">
+    <view class="nav-bar-content">
+      <view class="back-icon" bindtap="goBack"></view>
+      <view class="title">AI助手</view>
+    </view>
+  </view>
+
+  <scroll-view 
+    class="chat-messages" 
+    scroll-y="true" 
+    scroll-into-view="{{scrollToMessage}}" 
+    scroll-with-animation="true"
+    enhanced="true"
+    show-scrollbar="false"
+    bindscrolltoupper="onScrollToUpper"
+    scroll-anchoring="true"
+    refresher-enabled="{{false}}"
+  >
+    <view class="messages-container">
+      <block wx:for="{{messages}}" wx:key="id">
+        <view class="message-item {{item.type === 'user' ? 'user-message' : 'ai-message'}}" id="msg-{{item.id}}">
+          <view class="message-content">
+            <text wx:if="{{item.type === 'user'}}" class="message-text">{{item.content}}</text>
+            <text wx:if="{{item.type === 'ai' && !item.loading}}" class="message-text">{{item.content}}</text>
+            <view wx:if="{{item.type === 'ai' && item.loading}}" class="loading-container">
+              <view class="loading-dots">
+                <view class="dot"></view>
+                <view class="dot"></view>
+                <view class="dot"></view>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+      <view class="scroll-bottom" id="scroll-bottom"></view>
+    </view>
+  </scroll-view>
+  
+  <view class="input-container safe-area-bottom">
+    <input class="message-input" 
+           type="text" 
+           value="{{inputValue}}" 
+           bindinput="onInputChange" 
+           placeholder="请输入您的问题..." 
+           confirm-type="send"
+           bindconfirm="sendMessage"
+           disabled="{{isLoading}}"
+           adjust-position="{{false}}"
+           hold-keyboard="{{true}}"
+    />
+    <button class="send-button" bindtap="sendMessage" disabled="{{!inputValue || isLoading}}">
+      发送
+    </button>
+  </view>
+</view> 

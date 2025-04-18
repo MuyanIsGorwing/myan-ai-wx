@@ -1,8 +1,9 @@
 <!--index.wxml-->
-<navigation-bar title="Weixin" back="{{false}}" color="black" background="#FFF"></navigation-bar>
+<navigation-bar title="MyanAI" back="{{false}}" color="black" background="#FFF"></navigation-bar>
 <scroll-view class="scrollarea" scroll-y type="list">
   <view class="container">
-    Weixin
+    <view class="title">欢迎使用MyanAI</view>
+    <view class="subtitle">您的智能AI助手</view>
+    <button class="chat-button" bindtap="navigateToChat">开始对话</button>
   </view>
-  <view>{{message}}</view>
 </scroll-view>
