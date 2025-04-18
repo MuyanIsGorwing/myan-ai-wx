@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: MyanAi
+#  datasource:
+#    type: com.zaxxer.hikari.HikariDataSource
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://8.210.180.45:3306/myan_ai?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+#    username: root
+#    password: abc123
+mybatis:
+  mapper-locations:
+    - "classpath:mapper/**/*Mapper.xml"
+  configuration-properties:
+    mapUnderscoreToCamelCase: true
+server:
+  port: 8080
+
+ds:
+  key: sk-e136b60811e24b2a839381af90736479
+  url: https://api.deepseek.com/chat/completions
+
+mysqlDataSource:
+  path: ./src/main/resources

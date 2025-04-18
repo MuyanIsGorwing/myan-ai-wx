@@ -1,0 +1,5 @@
+{
+  "url": "jdbc:mysql://8.210.180.45:3306/myan_ai?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&allowMultiQueries=true",
+  "username": "root",
+  "password": "abc123"
+}

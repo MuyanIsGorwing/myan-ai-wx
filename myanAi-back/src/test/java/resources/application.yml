@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: MyanAi
+
+server:
+  port: 8080
+
+ds-api:
+  key: sk-e136b60811e24b2a839381af90736479
+  url: https://api.deepseek.com/chat/completions

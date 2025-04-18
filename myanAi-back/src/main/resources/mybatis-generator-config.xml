@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <context id="context" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+        <!-- 数据库的相关配置 -->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver" connectionURL="jdbc:mysql://8.210.180.45:3306/myan_ai?useUnicode=true&amp;characterEncoding=UTF-8" userId="root" password="abc123"/>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!-- 实体类生成的位置 -->
+        <javaModelGenerator targetPackage="com.myan.myanai.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+            <property name="trimStrings" value="true"/>
+            <property name="modelType" value="serializable"/>
+        </javaModelGenerator>
+        <!-- *Mapper.xml 文件的位置 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject=".\src\main\resources\">
+            <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+        <!-- Mapper接口文件的位置 -->
+        <javaClientGenerator targetPackage="com.myan.myanai.dao" targetProject="src/main/java" type="XMLMAPPER">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+        <!-- 相关表的配置 -->
+        <table tableName="content" domainObjectName="ContentDO"  enableInsert="true" enableDeleteByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableSelectByPrimaryKey="true" enableCountByExample="false"  enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"/>
+
+    </context>
+</generatorConfiguration>
+
