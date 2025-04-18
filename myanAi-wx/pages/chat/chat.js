@@ -1,5 +1,6 @@
 // 获取应用实例
 const app = getApp()
+const { api } = require('../../utils/request.js')
 
 Page({
   data: {
@@ -26,7 +27,7 @@ Page({
     })
   },
 
-  onInputChange: function(e) {
+  onInput: function(e) {
     this.setData({
       inputValue: e.detail.value
     })
@@ -71,39 +72,75 @@ Page({
       this.scrollToBottom()
     })
 
-    // 模拟API请求
-    this.simulateApiRequest(userMessage.content, aiMessage.id)
+    // 发送API请求
+    wx.request({
+      url: 'http://localhost:8080/ds/simple-questions',
+      method: 'GET',
+      data: {
+        content: userMessage.content
+      },
+      success: (res) => {
+        if (res.statusCode === 200 && res.data.code === 200) {
+          const aiReply = res.data.data.choices[0].message.content
+          
+          // 更新消息列表中的AI回复
+          const updatedMessages = this.data.messages.map(msg => {
+            if (msg.id === aiMessage.id) {
+              return {
+                ...msg,
+                content: aiReply,
+                loading: false
+              }
+            }
+            return msg
+          })
+
+          this.setData({
+            messages: updatedMessages,
+            isLoading: false
+          }, () => {
+            this.scrollToBottom()
+          })
+        } else {
+          // 处理服务器返回的错误
+          this.handleRequestError(aiMessage.id)
+        }
+      },
+      fail: (error) => {
+        // 处理网络错误
+        this.handleRequestError(aiMessage.id)
+      }
+    })
   },
 
-  simulateApiRequest: function(userInput, messageId) {
-    // 这里应该是实际的API请求
-    // 为了演示，我们使用setTimeout模拟网络请求
-    setTimeout(() => {
-      // 模拟API响应
-      const response = `这是对"${userInput}"的回复。在实际应用中，这里应该是从后端API获取的响应。`
-      
-      // 更新消息列表，将loading状态的消息替换为实际内容
-      const updatedMessages = this.data.messages.map(msg => {
-        if (msg.id === messageId) {
-          return {
-            ...msg,
-            content: response,
-            loading: false
-          }
+  // 处理请求错误的统一方法
+  handleRequestError: function(messageId) {
+    // 更新消息列表中的错误提示
+    const updatedMessages = this.data.messages.map(msg => {
+      if (msg.id === messageId) {
+        return {
+          ...msg,
+          content: '网络错误，请稍后再试',
+          loading: false,
+          isError: true
         }
-        return msg
-      })
+      }
+      return msg
+    })
 
-      this.setData({
-        messages: updatedMessages,
-        isLoading: false
-      }, () => {
-        this.scrollToBottom()
-      })
+    this.setData({
+      messages: updatedMessages,
+      isLoading: false
+    }, () => {
+      this.scrollToBottom()
+    })
 
-      // 模拟打字效果
-      this.simulateTypingEffect(messageId, response)
-    }, 1500) // 模拟1.5秒的网络延迟
+    // 显示错误提示
+    // wx.showToast({
+    //   title: '网络错误，请稍后再试',
+    //   icon: 'none',
+    //   duration: 2000
+    // })
   },
 
   simulateTypingEffect: function(messageId, fullText) {
